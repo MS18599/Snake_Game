@@ -12,8 +12,11 @@ width = 700
 height = 500
 
 gamewindow = pygame.display.set_mode((width,height))
+gover= pygame.image.load("image1.jpg")
+gover = pygame.transform.scale(gover,(width,height)).convert_alpha()
 bgimg = pygame.image.load("image.jpg")
 bgimg = pygame.transform.scale(bgimg,(width,height)).convert_alpha()
+
 pygame.display.set_caption("Snake_With_Mohit")
 pygame.display.update()
 #game specific var
@@ -33,8 +36,8 @@ def welcome():
     while not exit_game:
         gamewindow.fill((222,200,200))
         gamewindow.blit(bgimg, (0, 0))
-        text_screen("Welcome To Snake",(244,209,66),180,200)
-        text_screen("Press Space To Play", black, 10, 460)
+        text_screen("Welcome To Snake",black,180,200)
+        text_screen("Press Space To Play", (244,209,66), 10, 460)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit_game = True
@@ -57,8 +60,8 @@ def gameloop():
     velocity_x = 0
     velocity_y = 0
     init_velocity = 5
-    food_x = random.randint(20, width / 2)
-    food_y = random.randint(20, height / 2)
+    food_x = random.randint(20, width)
+    food_y = random.randint(0, height)
     score = 0
     snk_list = []
     snk_len = 1
@@ -72,7 +75,8 @@ def gameloop():
             with open("highscore.txt", "w") as f:
                 f.write(str(highscore))
             gamewindow.fill(white)
-            text_screen("Game Over! press enter to continue.", red,50,200)
+            gamewindow.blit(gover, (0, 0))
+            #text_screen("Game Over! press enter to continue.", red,50,200)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit_game = True
@@ -110,13 +114,13 @@ def gameloop():
                 food_y = random.randint(20, height / 2)
                 snk_len += 5
             if score > int(highscore):
-                highscore = score
+                 highscore = score
 
 
             gamewindow.fill(white)
             gamewindow.blit(bgimg, (0,0))
-            text_screen("SCORE: "+str(score)+"              HIGHSCORE: "+str(highscore),red,5,5)
-            pygame.draw.rect(gamewindow, red, [food_x, food_y, snake_size, snake_size])
+            text_screen("SCORE: "+str(score)+"              HIGHSCORE: "+str(highscore),(20, 55, 104),5,5)
+            pygame.draw.rect(gamewindow, red , [food_x, food_y, snake_size, snake_size])
 
             head = []
             head.append(snake_x)
